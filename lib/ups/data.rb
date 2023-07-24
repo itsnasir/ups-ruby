@@ -1,4 +1,4 @@
-require 'levenshtein'
+require 'text'
 
 module UPS
   module Data
@@ -31,7 +31,7 @@ module UPS
 
         normalized_string = ie_state_normalizer string_normalizer match_string
         counties_with_distances = IE_COUNTIES.map do |county|
-          [county, Levenshtein.distance(county.downcase, normalized_string)]
+          [county, Text::Levenshtein.distance(county.downcase, normalized_string)]
         end
         counties_with_distances_hash = Hash[*counties_with_distances.flatten]
         counties_with_distances_hash.min_by { |_k, v| v }[0]
